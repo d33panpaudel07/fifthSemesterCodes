@@ -6,14 +6,19 @@ def ceasar_encrypt(text, key):
 
         # converting from character to integer(i.e ascii integer value)
         ascii_value = ord(temp_char)
+        
         # correcting the position from ascii to alphabetical index i.e(a is 97 and corrected is 0)
         alphabet_position = ascii_value - char_correction
+        
         # applying ceasar function to encrypt
         encrypted_alphabet_position = (alphabet_position + key) % 26
+        
         # converting the encrypted character to display by ascii index
         ascii_value = encrypted_alphabet_position + char_correction
+        
         # converting the character from index to alphabet
         encrypted_char = chr(ascii_value)
+        
         # appending to the result cause appaently you can't modify original string directly from here
         result += encrypted_char
 
