@@ -17,10 +17,34 @@ f. Submit button -->
     <form action="/submitForm" method="get">
       <label for="name">Name</label>
       <input type="text" />
-      <label for="email">email</label>
+      <br />
+      <label for="email">Email</label>
       <input type="email" />
-      <label for="password">password</label>
+      <br />
+      <label for="password">Password</label>
       <input type="password" />
+      <br />
+      <br />
+      <fieldset style="width: fit-content">
+        <legend>Gender</legend>
+        <input type="radio" />
+        <label for="male">Male</label>
+        <input type="radio" />
+        <label for="female">Female</label>
+      </fieldset>
+      <br />
+      <fieldset style="width: fit-content">
+        <legend>Hobbies</legend>
+        <input type="checkbox" />
+        <label for="swimming">Swimming</label>
+        <input type="checkbox" />
+        <label for="dancing">Dancing</label>
+        <input type="checkbox" />
+        <label for="skiing">Skiing</label>
+      </fieldset>
+
+      <br />
+      <button type="submit">Submit</button>
     </form>
   </body>
 </html>
