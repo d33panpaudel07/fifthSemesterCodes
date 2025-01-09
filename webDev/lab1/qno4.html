@@ -16,30 +16,30 @@ f. Submit button -->
   <body>
     <form action="/submitForm" method="get">
       <label for="name">Name</label>
-      <input type="text" />
+      <input type="text" id="name" />
       <br />
       <label for="email">Email</label>
-      <input type="email" />
+      <input type="email" id="email" />
       <br />
       <label for="password">Password</label>
-      <input type="password" />
+      <input type="password" id="password" />
       <br />
       <br />
       <fieldset style="width: fit-content">
         <legend>Gender</legend>
-        <input type="radio" />
+        <input type="radio" id="male" name="gender" />
         <label for="male">Male</label>
-        <input type="radio" />
+        <input type="radio" id="female" name="gender" />
         <label for="female">Female</label>
       </fieldset>
       <br />
       <fieldset style="width: fit-content">
         <legend>Hobbies</legend>
-        <input type="checkbox" />
+        <input type="checkbox" id="swimming" name="hobbies" />
         <label for="swimming">Swimming</label>
-        <input type="checkbox" />
+        <input type="checkbox" id="dancing" name="hobbies" />
         <label for="dancing">Dancing</label>
-        <input type="checkbox" />
+        <input type="checkbox" id="skiing" name="hobbies" />
         <label for="skiing">Skiing</label>
       </fieldset>
 
