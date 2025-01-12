@@ -1,45 +1,123 @@
-def prepare_message(user_message):
-    # This is easier to understand
-    user_message = user_message.replace(" ", "")
-    user_message = user_message.replace("j", "i")
-    user_message = user_message.upper()
+def operation():
+    while True:
+        operation = input(
+            "What do you want to perform, Encryption / Decryption? (E/D) : "
+        ).upper()
+        if operation == "E":
+            return True
+        elif operation == "D":
+            return False
+        else:
+            print(
+                "Invalid operation. Please enter 'E' for Encryption or 'D' for Decryption."
+            )
 
-    # ONLY AN IDIOT PREFERS COMPLEXITY AND TIME CONSUMPTION UNLESS HE'S DONE CODE LIKE BELOW ,BEFOREHAND
-    # user_message = user_message.replace(" ", "").replace("j", "i").upper()
 
-    return user_message
+def find_position(matrix, element):
+    for row_index, row in enumerate(matrix):
+        for col_index, value in enumerate(row):
+            if value == element:
+                return row_index, col_index
+    return None
 
 
-def make_pairs_of_message(user_message):
-    user_message_in_pairs = []
-    lead_char_from_pair = 0
-    i = 2
-    while i <= len(user_message):
-        # for i in range(2, len(user_message), 2):
-        if user_message[lead_char_from_pair] == user_message[lead_char_from_pair + 1]:
-            user_message_in_pairs.append(user_message[lead_char_from_pair] + "X")
-            lead_char_from_pair = i - 1
-            i = i + 1
-            continue
-        # TAKING PAIRS FROM STRING AS LEAD CHARACTER IS 0 INITIALLY AND I IS 2 SO IN A STRING "HELLO" LEAD INDEXES H I INDEXES L AND CODE BELOW APPENDS TO A LIST FROM LEAD(INCLUSIVE) TO I(EXCLUSIVE) e_in_pairs = user_message_in_pairs.append( user_messa
-        user_message_in_pairs.append(user_message[lead_char_from_pair:i])
-        # UPDATING LEAD TO I AS I WILL BE INCREMENTED IN LOOP DECLARATION BY 2
-        lead_char_from_pair = i
-        i = i + 2
-    # THIS IS TO PUT REMAININ LAST PAIR IN THE LIST AS WELL BECAUSE THE LOOP STOPPED WHEN I = LAST LENGTH
-    user_message_in_pairs.append(user_message[lead_char_from_pair:])
-    if len(user_message_in_pairs[-1]) != 2:
-        user_message_in_pairs[-1] += "Z"
+def playfair(plain_text, key, choice):
+    matrix = []
+    row = []
+    alphabets = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
+    matrix_alphabets = ""
+    count = 0
 
-    return user_message_in_pairs
+    for char in key:
+        if count > 4:
+            matrix.append(row)
+            row = []
+            count = 0
+        if char not in matrix_alphabets:
+            matrix_alphabets += char
+            row.append(char)
+            count += 1
+
+    for char in alphabets:
+        if char not in matrix_alphabets:
+            if count > 4:
+                matrix.append(row)
+                row = []
+                count = 0
+            row.append(char)
+            count += 1
+
+    if row:
+        matrix.append(row)
+
+    print("Playfair Cipher Matrix:")
+    for r in matrix:
+        print(" ".join(r))
+
+    pairs = []
+    x = ""
+    y = ""
+    for char in plain_text:
+        if not x:
+            x = char
+        elif not y:
+            if x == char:
+                y = "X"
+                pairs.append((x, y))
+                x = char
+                y = ""
+            else:
+                y = char
+
+        if x and y:
+            pairs.append((x, y))
+            x = ""
+            y = ""
+
+    if x:
+        pairs.append((x, "X"))
+
+    print("Pairs:", pairs)
+
+    result = ""
+    for pair in pairs:
+        x_pos = find_position(matrix, pair[0])
+        y_pos = find_position(matrix, pair[1])
+
+        if x_pos and y_pos:
+            x_row, x_col = x_pos
+            y_row, y_col = y_pos
+
+            if x_row == y_row:  # Same row
+                if choice:
+                    result += matrix[x_row][(x_col + 1) % 5]
+                    result += matrix[y_row][(y_col + 1) % 5]
+                else:
+                    result += matrix[x_row][(x_col - 1) % 5]
+                    result += matrix[y_row][(y_col - 1) % 5]
+            elif x_col == y_col:  # Same column
+                if choice:
+                    result += matrix[(x_row + 1) % 5][x_col]
+                    result += matrix[(y_row + 1) % 5][y_col]
+                else:
+                    result += matrix[(x_row - 1) % 5][x_col]
+                    result += matrix[(y_row - 1) % 5][y_col]
+            else:  # Rectangle rule
+                result += matrix[x_row][y_col]
+                result += matrix[y_row][x_col]
+
+    return result
 
 
 def main():
-    user_message = "HElloooooo"
-    # user_message = input("Enter a message: ")
-    # user_key = input("Enter a key: ")
-    # user_operation = input("Enter 1 to encrypt or 2 to decrypt: ")
-    user_message = prepare_message(user_message)
-    print(user_message)
-    user_message = make_pairs_of_message(user_message)
-    print(user_message)
+    plain_text = input("Enter text: ").upper().replace("J", "I")
+    key = input("Enter key: ").upper().replace("J", "I")
+    choice = operation()
+
+    if choice:
+        print("Encrypted text: ", playfair(plain_text, key, choice))
+    else:
+        print("Decrypted text:", playfair(plain_text, key, choice))
+
+
+main()
