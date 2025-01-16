@@ -3,8 +3,11 @@
 
 using namespace std;
 
+int counter = 0;
+
 void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal)
 {
+    counter++;
     if (low == high)
     {
         minVal = arr[low];
@@ -12,6 +15,7 @@ void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal)
         return;
     }
 
+    counter++;
     if (high == low + 1)
     {
         if (arr[low] < arr[high])
@@ -48,6 +52,7 @@ int main()
 
     cout << "Minimum Value: " << minVal << endl;
     cout << "Maximum Value: " << maxVal << endl;
+    cout << "Steps: " << counter << endl;
 
     return 0;
 }
