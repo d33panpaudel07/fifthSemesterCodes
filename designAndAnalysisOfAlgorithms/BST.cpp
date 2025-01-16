@@ -25,6 +25,7 @@ public:
     Node *root = NULL;
     Node *curr = NULL;
     int val;
+    int counter = 0; // Global counter to track the number of steps
 
 public:
     BinarySearchTree()
@@ -34,6 +35,7 @@ public:
 
     int checkChildOfNode(Node *temp) // to check the status of the node
     {
+        counter++;                                            // Increment counter for each method call
         if ((temp->childL == NULL) && (temp->childR == NULL)) // assuming the node is leaf node
         {
             return 0;
@@ -42,7 +44,7 @@ public:
         {
             return 2;
         }
-        else // assuming the node has atleast one child
+        else // assuming the node has at least one child
         {
             return 1;
         }
@@ -50,6 +52,7 @@ public:
 
     Node *insertNodeFinder(Node *temp) // root goes to temp
     {
+        counter++; // Increment counter for each method call
         if (temp == NULL)
         {
             return NULL;
@@ -77,6 +80,7 @@ public:
 
     Node *deletePlaceFinder(Node *temp) // root goes to temp
     {
+        counter++; // Increment counter for each method call
         if (temp == NULL)
         {
             return NULL;
@@ -98,8 +102,9 @@ public:
         }
     }
 
-    Node *leftReplacementNodeFinderForDel(Node *temp) // to find greatest child to replace from left
+    Node *leftReplacementNodeFinderForDel(Node *temp) // to find the greatest child to replace from left
     {
+        counter++; // Increment counter for each method call
         if (temp->childR == NULL)
         {
             return temp;
@@ -113,9 +118,7 @@ public:
 
     void insert(int x)
     {
-        // cout << "Enter value to insert: ";
-        // cin >> val;
-
+        counter++; // Increment counter for each method call
         val = x;
         curr = insertNodeFinder(root); // returns temp that points to the desired location
 
@@ -142,8 +145,7 @@ public:
 
     void deleteFromTree(int val)
     {
-        // cout << "Enter value to delete: ";
-        // cin >> val;
+        counter++; // Increment counter for each method call
         this->val = val;
         curr = deletePlaceFinder(root);
 
@@ -164,9 +166,10 @@ public:
 
     void preTraverse(Node *temp)
     {
+        counter++; // Increment counter for each method call
         if (temp == NULL)
         {
-            cout << "Can't traverse the tree is empty." << endl;
+            cout << "Can't traverse the tree as it is empty." << endl;
             return;
         }
         else
@@ -202,6 +205,8 @@ public:
 
         deleteFromTree(50);
         preTraverse(root);
+
+        cout << "Total steps taken: " << counter << endl;
     }
 };
 
