@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int fibo(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+    else if (n == 1)
+    {
+        return 1;
+    }
+    return fibo(n - 1) + fibo(n - 2);
+}
+
+int main()
+{
+    int n;
+    cout << "Enter n: " cin >> n;
+
+    int result = fibo(n);
+    cout << "The " << n << " th term of fibonacci series is: " << result;
+    return 0;
+}
