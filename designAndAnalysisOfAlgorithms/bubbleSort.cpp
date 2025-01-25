@@ -16,7 +16,8 @@ int main()
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
-                stepsCounter += 3; // Swapping step (3 assignments)
+                // Normally we wouldn't consider 3 steps below
+                // stepsCounter += 3; // Swapping step (3 assignments)
             }
         }
     }
