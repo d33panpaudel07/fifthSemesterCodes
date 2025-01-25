@@ -4,16 +4,19 @@ using namespace std;
 int main()
 {
     int arr[10] = {2, 5, 3, 1, 8, 93, 7, 55, 11, 0};
+    int stepsCounter = 0;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)  // Outer loop runs 10 times
     {
-        for (int j = i + 1; j < 10; j++)
+        for (int j = i + 1; j < 10; j++)  // Inner loop runs (10 - i - 1) times
         {
+            stepsCounter++; // Comparison step
             if (arr[i] > arr[j])
             {
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
+                stepsCounter += 3; // Swapping step (3 assignments)
             }
         }
     }
@@ -24,4 +27,8 @@ int main()
     {
         cout << arr[k] << ", ";
     }
+
+    cout << "\nTotal steps: " << stepsCounter << endl;
+
+    return 0;
 }
