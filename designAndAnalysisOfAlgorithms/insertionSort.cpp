@@ -22,7 +22,7 @@ void insertionSort()
         // Move elements of arr[0..i-1], that are greater than current, to one position ahead
         while (j >= 0 && arr[j] > current)
         {
-            arr[j + 1] = arr[j];
+            exchange(arr[j + 1],arr[j]);
             j--;
         }
         arr[j + 1] = current;
