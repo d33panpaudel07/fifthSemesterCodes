@@ -5,6 +5,7 @@ void insertionSort()
 {
     int arr[10] = {2, 5, 3, 1, 8, 93, 7, 55, 11, 0};
 
+    // APPARENTLY THIS CODE BELOW IS CALLED LAMBDA FUCNTIONS IN CPP
     auto exchange = [](int &x, int &y)
     {
         int temp = x;
