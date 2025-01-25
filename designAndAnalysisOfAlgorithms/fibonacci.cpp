@@ -1,7 +1,11 @@
 #include <iostream>
 using namespace std;
+
+int stepCounter = 0;
+
 int fibo(int n)
 {
+    stepCounter++;
     if (n == 0)
     {
         return 0;
@@ -16,9 +20,11 @@ int fibo(int n)
 int main()
 {
     int n;
-    cout << "Enter n: " cin >> n;
+    cout << "Enter n: ";
+    cin >> n;
 
     int result = fibo(n);
-    cout << "The " << n << " th term of fibonacci series is: " << result;
+    cout << "The " << n << "th term of Fibonacci series is: " << result << endl;
+    cout << "Number of steps: " << stepCounter << endl;
     return 0;
 }
