@@ -13,7 +13,8 @@ int factorial(int num)
 int main()
 {
     int num;
-    cout << "Enter a number to find it's factorial: " cin >> num;
+    cout << "Enter a number to find it's factorial: ";
+    cin >> num;
 
     int result = factorial(num);
     cout << "The factorial of " << num << " is: " << result;
