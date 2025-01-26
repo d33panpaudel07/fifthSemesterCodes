@@ -21,7 +21,7 @@ void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal, int &s
     }
 
     int mid = (low + high) / 2, minL, maxL, minR, maxR;
-    steps++; // For calculating mid
+    //steps++; // For calculating mid
     minMaxSearch(arr, low, mid, minL, maxL, steps);
     minMaxSearch(arr, mid + 1, high, minR, maxR, steps);
 
