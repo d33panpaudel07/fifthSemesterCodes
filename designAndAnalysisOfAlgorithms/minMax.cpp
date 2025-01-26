@@ -6,7 +6,7 @@ void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal, int &s
     steps++; // Increment for function call
     if (low == high) { // Single element
         minVal = maxVal = arr[low];
-        steps += 3; // 1 condition + 2 assignments
+        //steps += 3; // 1 condition + 2 assignments
         return;
     }
 
@@ -16,7 +16,7 @@ void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal, int &s
         } else {
             minVal = arr[high], maxVal = arr[low];
         }
-        steps += 5; // 2 conditions + 2 comparisons + 2 assignments
+        //steps += 5; // 2 conditions + 2 comparisons + 2 assignments
         return;
     }
 
@@ -27,7 +27,7 @@ void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal, int &s
 
     minVal = min(minL, minR);
     maxVal = max(maxL, maxR);
-    steps += 4; // For 2 `min` and 2 `max` operations
+    //steps += 4; // For 2 `min` and 2 `max` operations
 }
 
 int main() {
