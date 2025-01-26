@@ -1,68 +1,42 @@
-// This code was later updated by chatGPT which added counter to right place
-// APPARENTLY EVEN CONDITION CHECKS FOR A LOOP IS ALSO A STEP THAT ADDS TO TIME COMPLEXITY
 #include <iostream>
 #include <climits>
-
 using namespace std;
 
-int counter = 0;
-
-void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal)
-{
-    counter++; // Increment for the function call itself
-    if (low == high)
-    {
-        counter++; // For the condition check
-        minVal = arr[low];
-        maxVal = arr[low];
-        counter += 2; // For the assignments
+void minMaxSearch(int arr[], int low, int high, int &minVal, int &maxVal, int &steps) {
+    steps++; // Increment for function call
+    if (low == high) { // Single element
+        minVal = maxVal = arr[low];
+        steps += 3; // 1 condition + 2 assignments
         return;
     }
 
-    counter++; // For the second condition check
-    if (high == low + 1)
-    {
-        counter++; // For the condition check inside the if
-        if (arr[low] < arr[high])
-        {
-            minVal = arr[low];
-            maxVal = arr[high];
-            counter += 2; // For the assignments
+    if (high == low + 1) { // Two elements
+        if (arr[low] < arr[high]) {
+            minVal = arr[low], maxVal = arr[high];
+        } else {
+            minVal = arr[high], maxVal = arr[low];
         }
-        else
-        {
-            minVal = arr[high];
-            maxVal = arr[low];
-            counter += 2; // For the assignments
-        }
+        steps += 5; // 2 conditions + 2 comparisons + 2 assignments
         return;
     }
 
-    int mid = (low + high) / 2;
-    counter++; // For the calculation of mid
+    int mid = (low + high) / 2, minL, maxL, minR, maxR;
+    steps++; // For calculating mid
+    minMaxSearch(arr, low, mid, minL, maxL, steps);
+    minMaxSearch(arr, mid + 1, high, minR, maxR, steps);
 
-    int minLeft, maxLeft, minRight, maxRight;
-
-    minMaxSearch(arr, low, mid, minLeft, maxLeft);        // Recursive call 1
-    minMaxSearch(arr, mid + 1, high, minRight, maxRight); // Recursive call 2
-
-    minVal = min(minLeft, minRight);
-    maxVal = max(maxLeft, maxRight);
-    counter += 4; // For the two min and two max operations
+    minVal = min(minL, minR);
+    maxVal = max(maxL, maxR);
+    steps += 4; // For 2 `min` and 2 `max` operations
 }
 
-int main()
-{
+int main() {
     int arr[] = {2, 5, 3, 1, 8, 93, 7, 55, 11, 0};
     int n = sizeof(arr) / sizeof(arr[0]);
+    int minVal = INT_MAX, maxVal = INT_MIN, steps = 0;
 
-    int minVal = INT_MAX, maxVal = INT_MIN;
+    minMaxSearch(arr, 0, n - 1, minVal, maxVal, steps);
 
-    minMaxSearch(arr, 0, n - 1, minVal, maxVal);
-
-    cout << "Minimum Value: " << minVal << endl;
-    cout << "Maximum Value: " << maxVal << endl;
-    cout << "Steps: " << counter << endl;
-
+    cout << "Minimum: " << minVal << "\nMaximum: " << maxVal << "\nSteps: " << steps << endl;
     return 0;
 }
