@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -51,6 +52,7 @@ map<char, string> buildHuffmanTree(vector<InputNode> &input)
     // Node * tells pq that it has to store pointers to Node's instances
     // vector<Node *> tells pq that it has to use vector structure of type Node's
     //       pointers, so vector will hold pointers to Node
+    //
     priority_queue<Node *, vector<Node *>, Compare> pq;
 
     // Insert nodes into the priority queue
