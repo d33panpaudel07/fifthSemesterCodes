@@ -49,6 +49,7 @@ void JobSequencing(Job arr[], int n)
 
 int main()
 {
+    cout << "-------------------- Job Sequencing --------------------" << endl;
     int n;
     cout << "Enter the number of jobs: ";
     cin >> n;

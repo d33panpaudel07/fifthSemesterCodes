@@ -55,8 +55,8 @@ int main()
 
     Kruskal graph;
 
-    cout << "\nProgram to implement Kruskal's Algorithm : \n";
-    cout << "\nEnter no. of vertices : ";
+    cout << "-------------------- Kruskal --------------------" << endl;
+    cout << "Enter no. of vertices : ";
     cin >> n;
 
     cout << "\nEnter the adjacency matrix : \n";

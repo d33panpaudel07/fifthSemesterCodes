@@ -85,8 +85,8 @@ public:
 int main()
 {
     int num, edges;
-    cout << "\n\t\t\tPrim's Algorithm";
-    cout << "\n\nEnter the number of nodes: ";
+    cout << "-------------------- Prims --------------------" << endl;
+    cout << "Enter the number of nodes: ";
     cin >> num;
     cout << "Enter the number of edges: ";
     cin >> edges;
