@@ -26,13 +26,6 @@ int main()
     // Apply Floyd-Warshall algorithm and display the results
     floydWarshall(graph, V);
 
-    // Deallocate memory
-    for (int i = 0; i < V; ++i)
-    {
-        delete[] graph[i];
-    }
-    delete[] graph;
-
     return 0;
 }
 
@@ -81,11 +74,4 @@ void floydWarshall(int **graph, int V)
         }
         cout << endl;
     }
-
-    // Deallocate memory
-    for (int i = 0; i < V; ++i)
-    {
-        delete[] dist[i];
-    }
-    delete[] dist;
 }
