@@ -1,11 +1,12 @@
 #include <iostream>
 #include <climits>
-
 using namespace std;
+
 void floydWarshall(int **graph, int V);
 
 int main()
 {
+    cout << "-------------------- Floyd Warshall --------------------" << endl;
     int V;
 
     cout << "Enter the number of vertices in the graph: ";
@@ -18,12 +19,17 @@ int main()
         graph[i] = new int[V];
         for (int j = 0; j < V; ++j)
         {
-            cout << "Enter the weight from vertex " << i << " to vertex " << j << " (or INT_MAX if no direct edge): ";
-            cin >> graph[i][j];
+            string input;
+            cout << "Enter weight from vertex " << i << " to vertex " << j << " (or 'x' if no direct edge): ";
+            cin >> input;
+            if (input == "x")
+                graph[i][j] = INT_MAX; // Use INT_MAX for no direct edge
+            else
+                graph[i][j] = stoi(input);
         }
     }
 
-    // Apply Floyd-Warshall algorithm and display the results
+    // Apply Floyd-Warshall algorithm
     floydWarshall(graph, V);
 
     return 0;
@@ -31,7 +37,7 @@ int main()
 
 void floydWarshall(int **graph, int V)
 {
-    // Create a 2D array to store the shortest distances between every pair of vertices
+    // Create a 2D array to store the shortest distances
     int **dist = new int *[V];
     for (int i = 0; i < V; ++i)
     {
@@ -42,7 +48,7 @@ void floydWarshall(int **graph, int V)
         }
     }
 
-    // Apply the Floyd-Warshall algorithm
+    // Floyd-Warshall algorithm
     for (int k = 0; k < V; ++k)
     {
         for (int i = 0; i < V; ++i)
@@ -57,20 +63,16 @@ void floydWarshall(int **graph, int V)
         }
     }
 
-    // Print the shortest distances
-    cout << "Shortest distances between every pair of vertices:\n";
+    // Print shortest distances
+    cout << "\nShortest distances between every pair of vertices:\n";
     for (int i = 0; i < V; ++i)
     {
         for (int j = 0; j < V; ++j)
         {
             if (dist[i][j] == INT_MAX)
-            {
-                cout << "INF\t";
-            }
+                cout << "x\t";
             else
-            {
                 cout << dist[i][j] << "\t";
-            }
         }
         cout << endl;
     }
