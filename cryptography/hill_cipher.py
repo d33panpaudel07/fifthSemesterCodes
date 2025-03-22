@@ -19,6 +19,5 @@ def main():
     my_matrix = []
     my_matrix = make_matrix(my_matrix)
 
-    
 
 main()
