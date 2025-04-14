@@ -1,123 +1,101 @@
-def operation():
-    while True:
-        operation = input(
-            "What do you want to perform, Encryption / Decryption? (E/D) : "
-        ).upper()
-        if operation == "E":
-            return True
-        elif operation == "D":
-            return False
-        else:
-            print(
-                "Invalid operation. Please enter 'E' for Encryption or 'D' for Decryption."
-            )
+import numpy as np
 
 
-def find_position(matrix, element):
-    for row_index, row in enumerate(matrix):
-        for col_index, value in enumerate(row):
-            if value == element:
-                return row_index, col_index
-    return None
+def findIndex(matrix, letter):
+    r = 0
+    for row in matrix:
+        c = 0
+        for element in row:
+            if element == letter:
+                return (r, c)
+            elif letter in element:
+                return r, c
+            c += 1
+        r += 1
 
 
-def playfair(plain_text, key, choice):
-    matrix = []
-    row = []
-    alphabets = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
-    matrix_alphabets = ""
-    count = 0
-
-    for char in key:
-        if count > 4:
-            matrix.append(row)
-            row = []
-            count = 0
-        if char not in matrix_alphabets:
-            matrix_alphabets += char
-            row.append(char)
-            count += 1
-
-    for char in alphabets:
-        if char not in matrix_alphabets:
-            if count > 4:
-                matrix.append(row)
-                row = []
-                count = 0
-            row.append(char)
-            count += 1
-
-    if row:
-        matrix.append(row)
-
-    print("Playfair Cipher Matrix:")
-    for r in matrix:
-        print(" ".join(r))
-
-    pairs = []
-    x = ""
-    y = ""
-    for char in plain_text:
-        if not x:
-            x = char
-        elif not y:
-            if x == char:
-                y = "X"
-                pairs.append((x, y))
-                x = char
-                y = ""
+def encryptMessage(message, key):
+    keyMatrix = generateMatrix(key)
+    message.replace(" ", "")
+    message = list(message)
+    cipherText = ""
+    for i in range(int(np.ceil(len(message) / 2))):
+        digraph = message[0:2]
+        if len(digraph) == 2:
+            if digraph[0] != digraph[1]:
+                message.pop(0)
+                message.pop(0)
+            elif digraph[0] != "X":
+                digraph[1] = "X"
+                message.pop(0)
             else:
-                y = char
-
-        if x and y:
-            pairs.append((x, y))
-            x = ""
-            y = ""
-
-    if x:
-        pairs.append((x, "X"))
-
-    print("Pairs:", pairs)
-
-    result = ""
-    for pair in pairs:
-        x_pos = find_position(matrix, pair[0])
-        y_pos = find_position(matrix, pair[1])
-
-        if x_pos and y_pos:
-            x_row, x_col = x_pos
-            y_row, y_col = y_pos
-
-            if x_row == y_row:  # Same row
-                if choice:
-                    result += matrix[x_row][(x_col + 1) % 5]
-                    result += matrix[y_row][(y_col + 1) % 5]
-                else:
-                    result += matrix[x_row][(x_col - 1) % 5]
-                    result += matrix[y_row][(y_col - 1) % 5]
-            elif x_col == y_col:  # Same column
-                if choice:
-                    result += matrix[(x_row + 1) % 5][x_col]
-                    result += matrix[(y_row + 1) % 5][y_col]
-                else:
-                    result += matrix[(x_row - 1) % 5][x_col]
-                    result += matrix[(y_row - 1) % 5][y_col]
-            else:  # Rectangle rule
-                result += matrix[x_row][y_col]
-                result += matrix[y_row][x_col]
-
-    return result
+                digraph[1] = "Q"
+                message.pop(0)
+        elif digraph[0] != "X":
+            digraph.append("X")
+            message.pop(0)
+        else:
+            digraph.append("Q")
+            message.pop(0)
+        r1, c1 = findIndex(keyMatrix, digraph[0])
+        r2, c2 = findIndex(keyMatrix, digraph[1])
+        if r1 == r2:
+            if c1 != 4 and c2 != 4:
+                cipherText += keyMatrix[r1][c1 + 1]
+                cipherText += keyMatrix[r1][c2 + 1]
+            elif c1 != 4:
+                cipherText += keyMatrix[r1][c1 + 1]
+                cipherText += keyMatrix[r1][0]
+            else:
+                cipherText += keyMatrix[r1][0]
+                cipherText += keyMatrix[r1][c2 + 1]
+        elif c1 == c2:
+            if r1 != 4 and r2 != 4:
+                cipherText += keyMatrix[r1 + 1][c1]
+                cipherText += keyMatrix[r2 + 1][c1]
+            elif r1 != 4:
+                cipherText += keyMatrix[r1 + 1][c1]
+                cipherText += keyMatrix[0][c2]
+            else:
+                cipherText += keyMatrix[0][c1]
+                cipherText += keyMatrix[r2 + 1][c1]
+        else:
+            cipherText += keyMatrix[r1][c2]
+            cipherText += keyMatrix[r2][c1]
+    return cipherText
 
 
-def main():
-    plain_text = input("Enter text: ").upper().replace("J", "I")
-    key = input("Enter key: ").upper().replace("J", "I")
-    choice = operation()
+def generateMatrix(key):
+    matrix = []
+    keyMatrix = [[None for _ in range(5)] for _ in range(5)]
+    for i in range(len(key)):
+        if key[i] not in matrix:
+            if key[i] not in ["I", "J"]:
+                matrix.append(key[i])
+            else:
+                matrix.append("I")
+    for j in range(26):
+        if letters[j] not in matrix:
+            if letters[j] not in ("I", "J"):
+                matrix.append(letters[j])
+            elif "I" not in matrix:
+                matrix.append("I")
+            else:
+                continue
+    count = 0
+    for rows in range(5):
+        for cols in range(5):
+            keyMatrix[rows][cols] = matrix[count]
+            count += 1
+    print(keyMatrix)
+    return keyMatrix
 
-    if choice:
-        print("Encrypted text: ", playfair(plain_text, key, choice))
-    else:
-        print("Decrypted text:", playfair(plain_text, key, choice))
 
-
-main()
+print("-------------------- play_fair_cipher --------------------\n")
+letters = []
+for i in range(65, 91):
+    letters.append(chr(i))
+message = "eudaemonia"
+key = "kerfuffle"
+print(f"The encryption of {message} is: ")
+print(encryptMessage(message.upper(), key.upper()))

@@ -1,4 +1,5 @@
 def make_matrix(matrix):
+    print("-------------------- hill_cipher --------------------\n")
     dimension_i = int(input("Enter ith dimension of matrix: "))
     dimension_j = int(input("Enter jth dimension of matrix: "))
     user_inp = 0

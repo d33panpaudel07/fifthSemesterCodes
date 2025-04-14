@@ -30,6 +30,7 @@ def caesar_cipher(plain_text, key, choice):
 
 
 def main():
+    print("-------------------- ceasar_search --------------------\n")
     plain_text = input("Enter text: ").upper()
     key = int(input("Enter key: "))
     choice = operation()
@@ -37,5 +38,6 @@ def main():
         print("Encrypted text: ", caesar_cipher(plain_text, key, choice))
     else:
         print("Decrypted text: ", caesar_cipher(plain_text, key, choice))
+
 
 main()
